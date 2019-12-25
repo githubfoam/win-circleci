@@ -1,0 +1,24 @@
+# Python CircleCI 2.0 configuration file
+#
+# https://circleci.com/docs/2.0/hello-world-windows/#example-configuration-file
+#
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.2.0
+
+jobs:
+  build:
+    executor:
+      name: win/default
+    steps: # multiple shells in the same job
+      - checkout
+      - run: ls -lah # use Bash
+      - run:
+          command: ping circleci.com
+          shell: cmd.exe # use Command
+      - run:
+          command: echo 'This is powershell executor'
+          shell: powershell.exe # use Powershell
+      - run: dotnet tool install --global PowerShell # install the latest version of Powershell Core with the dotnet cli and use it in a job’s successive steps
+      - run: pwsh ./listDirs.ps1
