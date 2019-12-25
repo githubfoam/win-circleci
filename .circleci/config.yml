@@ -15,7 +15,7 @@ jobs:
       - checkout
       # - run: ls -lah # use Bash
       - run:
-          command: ping circleci.com
+          command: echo 'This is Command'
           shell: cmd.exe # use Command
       - run:
           command: echo 'This is powershell executor'
