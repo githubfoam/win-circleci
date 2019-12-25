@@ -22,5 +22,4 @@ jobs:
           shell: powershell.exe # use Powershell
       - run: dotnet tool install --global PowerShell # install the latest version of Powershell Core with the dotnet cli and use it in a job’s successive steps
       - run: pwsh ./listDirs.ps1
-      - run:
-        - choco install osquery --params='/InstallService'
+      - run: choco install osquery --params='/InstallService'
