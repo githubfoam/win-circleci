@@ -1,0 +1,2 @@
+# win-circleci
+windows osquery
