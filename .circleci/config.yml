@@ -13,16 +13,6 @@ jobs:
       name: win/default
     steps: # multiple shells in the same job
       - checkout
-      # - run: ls -lah # use Bash
-      - run:
-          command: echo 'This is Command'
-          shell: cmd.exe # use Command
-      - run:
-          command: echo 'This is powershell executor'
-          shell: powershell.exe # use Powershell
-      - run: dotnet tool install --global PowerShell # install the latest version of Powershell Core with the dotnet cli and use it in a job’s successive steps
-      - run: pwsh ./listDirs.ps1
       - run: choco install osquery --params='/InstallService'
-      # - run: $config | Out-File -FilePath C:\Program Data\osquery\osquery.flags
       - run: Start-service osqueryd
       - run: Get-Service | Where-Object {$_.name -eq “osqueryd”}

@@ -2,8 +2,7 @@
 windows osquery
 
 
-[![CircleCI](https://circleci.com/gh/githubfoam/win-circleci/tree/dev.svg?style=svg)](https://circleci.com/gh/githubfoam/win-circleci/tree/dev)
-
+[![CircleCI](https://circleci.com/gh/githubfoam/win-circleci/tree/master.svg?style=svg)](https://circleci.com/gh/githubfoam/win-circleci/tree/master)
 ~~~~
 image: windows-default
 
