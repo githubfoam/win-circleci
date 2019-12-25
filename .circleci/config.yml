@@ -13,7 +13,7 @@ jobs:
       name: win/default
     steps: # multiple shells in the same job
       - checkout
-      - run: ls -lah # use Bash
+      # - run: ls -lah # use Bash
       - run:
           command: ping circleci.com
           shell: cmd.exe # use Command
