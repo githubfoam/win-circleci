@@ -26,3 +26,4 @@ jobs:
       # - run: $config | Out-File -FilePath C:\Program Data\osquery\osquery.flags
       - run: Start-service osqueryd
       - run: Get-Service | Where-Object {$_.name -eq “osqueryd”}
+      - run: osqueryd --flagfile=C:\ProgramData\osquery\osquery.flags --config_path=C:\ProgramData\osquery\osquery.conf
