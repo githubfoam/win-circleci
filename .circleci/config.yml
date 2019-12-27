@@ -23,7 +23,10 @@ jobs:
           command: conda info -a
           shell: cmd.exe # use Command
       - run:
-          command: conda env create -n venv-basic-anomaly-detection python=$(which python3)  -f conda_environment.yml
+          command: python --version
+          shell: cmd.exe # use Command
+      - run:
+          command: conda env create -n venv-basic-anomaly-detection python=$(which python)  -f conda_environment.yml
           shell: cmd.exe # use Command
       - run:
           command: source activate venv-basic-anomaly-detection
