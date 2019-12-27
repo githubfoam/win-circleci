@@ -14,26 +14,26 @@ jobs:
     steps: # multiple shells in the same job
       - checkout
       # - run: ls -lah # use Bash
-      # - run:
-      #     command: echo 'This is Command'
-      #     shell: cmd.exe # use Command
+      - run:
+          command: conda info -a
+          shell: cmd.exe # use Command
       # - run:
       #     command: echo 'This is powershell executor'
       #     shell: powershell.exe # use Powershell
       # - run: dotnet tool install --global PowerShell # install the latest version of Powershell Core with the dotnet cli and use it in a job’s successive steps
       # - run: pwsh ./listDirs.ps1
-      - run:
-          command: choco install osquery --params='/InstallService'
-          shell: powershell.exe # use Powershell
-      - run:
-          command: Start-service osqueryd
-          shell: powershell.exe # use Powershell
-      - run:
-          command: Get-Service | Where-Object {$_.name -eq “osqueryd”}
-          shell: powershell.exe # use Powershell
-      - run:
-          command: osqueryd --flagfile=C:\ProgramData\osquery\osquery.flags --config_path=C:\ProgramData\osquery\osquery.conf
-          shell: powershell.exe # use Powershell
+      # - run:
+      #     command: choco install osquery --params='/InstallService'
+      #     shell: powershell.exe # use Powershell
+      # - run:
+      #     command: Start-service osqueryd
+      #     shell: powershell.exe # use Powershell
+      # - run:
+      #     command: Get-Service | Where-Object {$_.name -eq “osqueryd”}
+      #     shell: powershell.exe # use Powershell
+      # - run:
+      #     command: osqueryd --flagfile=C:\ProgramData\osquery\osquery.flags --config_path=C:\ProgramData\osquery\osquery.conf
+      #     shell: powershell.exe # use Powershell
       # - run: $config | Out-File -FilePath C:\Program Data\osquery\osquery.flags
       # - run: Start-service osqueryd
       # - run: Get-Service | Where-Object {$_.name -eq “osqueryd”}
