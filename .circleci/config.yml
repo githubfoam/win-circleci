@@ -13,9 +13,20 @@ jobs:
       name: win/default
     steps: # multiple shells in the same job
       - checkout
-      # - run: ls -lah # use Bash
+      - run:
+          command: conda config --set always_yes yes --set changeps1 no
+          shell: cmd.exe # use Command
+      - run:
+          command: conda update -q conda
+          shell: cmd.exe # use Command
       - run:
           command: conda info -a
+          shell: cmd.exe # use Command
+      - run:
+          command: conda env create -n venv-basic-anomaly-detection python=$(which python3)  -f conda_environment.yml
+          shell: cmd.exe # use Command
+      - run:
+          command: source activate venv-basic-anomaly-detection
           shell: cmd.exe # use Command
       # - run:
       #     command: echo 'This is powershell executor'
