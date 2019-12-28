@@ -31,6 +31,9 @@ jobs:
       - run:
           command: conda activate venv-basic-anomaly-detection
           shell: cmd.exe # use Command
+      - run:
+          command: py.test
+          shell: cmd.exe # use Command
       # - run:
       #     command: echo 'This is powershell executor'
       #     shell: powershell.exe # use Powershell
