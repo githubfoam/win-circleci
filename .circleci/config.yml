@@ -29,7 +29,7 @@ jobs:
           command: conda env create -n venv-basic-anomaly-detection python=3.7  -f conda_environment.yml
           shell: cmd.exe # use Command
       - run:
-          command: source activate venv-basic-anomaly-detection
+          command: conda activate venv-basic-anomaly-detection
           shell: cmd.exe # use Command
       # - run:
       #     command: echo 'This is powershell executor'
