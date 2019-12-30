@@ -10,8 +10,12 @@ jobs:
       - restore_cache:
           key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
       - run:
+          name: "Update conda"
+          command: conda update -n base -c defaults conda --yes
+      - run:
           name: Install dependencies
           command: conda env create -f environment.yml
+
           # command: |
           #   conda env list | grep anaconda-docker >/dev/null
           #   if [[ $? != 0 ]]; then
