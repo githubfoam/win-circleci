@@ -12,9 +12,9 @@ jobs:
       - run:
           name: Install dependencies
           command: conda env create -f environment.yml
-      - run:
-          name: "Update conda"
-          command: conda env update -f environment.yml
+      # - run:
+      #     name: "Update conda"
+      #     command: conda env update -f environment.yml
           # command: |
           #   conda env list | grep anaconda-docker >/dev/null
           #   if [[ $? != 0 ]]; then
