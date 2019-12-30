@@ -30,4 +30,4 @@ jobs:
           command: conda run -n anaconda-docker python -m unittest discover -v
       - run:
           name: Remove environment
-          command: conda remove --name anaconda-docker --all
+          command: conda remove --name anaconda-docker --all --yes
