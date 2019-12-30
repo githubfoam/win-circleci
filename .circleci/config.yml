@@ -7,8 +7,8 @@ jobs:
       - image: continuumio/miniconda3
     steps:
       - checkout
-      - restore_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
+      # - restore_cache:
+      #     key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
       - run:
           name: Install dependencies
           command: conda env create -f environment.yml
@@ -21,10 +21,10 @@ jobs:
       #       if [[ $? != 0 ]]; then
       #           conda env create -f environment.yml
       #       fi
-      - save_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
-          paths:
-            - "/opt/conda"
+      # - save_cache:
+      #     key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
+      #     paths:
+      #       - "/opt/conda"
       - run:
           name: Run unit tests
           command: conda run -n anaconda-docker python -m unittest discover -v
