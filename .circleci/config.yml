@@ -12,14 +12,15 @@ jobs:
       - run:
           name: Install dependencies
           command: conda env create -f environment.yml
-      - run:
+      # - run:
       #     name: "Update conda"
       #     command: conda env update -f environment.yml
-          command: |
-            conda env list | grep anaconda-docker >/dev/null
-            if [[ $? != 0 ]]; then
-                conda env create -f environment.yml
-            fi
+      # - run:
+      #     command: |
+      #       conda env list | grep anaconda-docker >/dev/null
+      #       if [[ $? != 0 ]]; then
+      #           conda env create -f environment.yml
+      #       fi
       - save_cache:
           key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
           paths:
@@ -27,3 +28,6 @@ jobs:
       - run:
           name: Run unit tests
           command: conda run -n anaconda-docker python -m unittest discover -v
+      - run:
+          name: Remove environment
+          command: conda remove --name anaconda-docker --all
