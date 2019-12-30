@@ -10,12 +10,13 @@ jobs:
       - restore_cache:
           key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
       - run:
-          name: Install dependencies (if needed)
-          command: |
-            conda env list | grep anaconda-docker >/dev/null
-            if [[ $? != 0 ]]; then
-                conda env create -f environment.yml
-            fi
+          name: Install dependencies
+          command: conda env create -f environment.yml
+          # command: |
+          #   conda env list | grep anaconda-docker >/dev/null
+          #   if [[ $? != 0 ]]; then
+          #       conda env create -f environment.yml
+          #   fi
       - save_cache:
           key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
           paths:
