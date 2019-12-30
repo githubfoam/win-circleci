@@ -1,58 +1,25 @@
-# Python CircleCI 2.0 configuration file
-#
-# https://circleci.com/docs/2.0/hello-world-windows/#example-configuration-file
-#
-version: 2.1
 
-# orbs:
-#   win: circleci/windows@2.2.0
-
+version: 2
 jobs:
   build:
-    executor:
-      name: win/default
-    steps: # multiple shells in the same job
+    working_directory: /app
+    docker:
+      - image: continuumio/miniconda3
+    steps:
       - checkout
+      - restore_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
       - run:
-          command: conda config --set always_yes yes --set changeps1 no
-          shell: cmd.exe # use Command
+          name: Install dependencies (if needed)
+          command: |
+            conda env list | grep anaconda-docker >/dev/null
+            if [[ $? != 0 ]]; then
+                conda env create -f environment.yml
+            fi
+      - save_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
+          paths:
+            - "/opt/conda"
       - run:
-          command: conda update -q conda
-          shell: cmd.exe # use Command
-      - run:
-          command: conda info -a
-          shell: cmd.exe # use Command
-      - run:
-          command: python --version
-          shell: cmd.exe # use Command
-      - run:
-          command: conda env create -n venv-basic-anomaly-detection python=3.7  -f conda_environment.yml
-          shell: cmd.exe # use Command
-      - run:
-          command: conda activate venv-basic-anomaly-detection
-          shell: cmd.exe # use Command
-      - run:
-          # command: python -m pytest test_nb.py
-          command: pytest test_nb.py
-          shell: cmd.exe # use Command
-      # - run:
-      #     command: echo 'This is powershell executor'
-      #     shell: powershell.exe # use Powershell
-      # - run: dotnet tool install --global PowerShell # install the latest version of Powershell Core with the dotnet cli and use it in a job’s successive steps
-      # - run: pwsh ./listDirs.ps1
-      # - run:
-      #     command: choco install osquery --params='/InstallService'
-      #     shell: powershell.exe # use Powershell
-      # - run:
-      #     command: Start-service osqueryd
-      #     shell: powershell.exe # use Powershell
-      # - run:
-      #     command: Get-Service | Where-Object {$_.name -eq “osqueryd”}
-      #     shell: powershell.exe # use Powershell
-      # - run:
-      #     command: osqueryd --flagfile=C:\ProgramData\osquery\osquery.flags --config_path=C:\ProgramData\osquery\osquery.conf
-      #     shell: powershell.exe # use Powershell
-      # - run: $config | Out-File -FilePath C:\Program Data\osquery\osquery.flags
-      # - run: Start-service osqueryd
-      # - run: Get-Service | Where-Object {$_.name -eq “osqueryd”}
-      # - run: osqueryd --flagfile=C:\ProgramData\osquery\osquery.flags --config_path=C:\ProgramData\osquery\osquery.conf
+          name: Run unit tests
+          command: conda run -n anaconda-docker python -m unittest discover -v
