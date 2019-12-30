@@ -14,7 +14,7 @@ jobs:
           command: conda env create -f environment.yml
       - run:
           name: "Update conda"
-          command: conda update -n anaconda-docker -c defaults conda --yes
+          command: conda env update -n anaconda-docker -f environment.yml
           # command: |
           #   conda env list | grep anaconda-docker >/dev/null
           #   if [[ $? != 0 ]]; then
