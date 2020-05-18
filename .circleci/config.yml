@@ -16,3 +16,5 @@ jobs:
       - run: choco install osquery --params='/InstallService'
       - run: Start-service osqueryd
       - run: Get-Service | Where-Object {$_.name -eq “osqueryd”}
+      - run: choco install vagrant
+      - run: vagrant version
