@@ -7,18 +7,11 @@ version: 2.1
 orbs:
   win: circleci/windows@2.2.0
 
-jobs:
-  build:
-    executor: #https://circleci.com/docs/2.0/hello-world-windows/#section=getting-started
-      name: win/default
-    steps: # multiple shells in the same job
-      - checkout
-      - run: choco install osquery --params='/InstallService'
-      - run: Start-service osqueryd
-      - run: Get-Service | Where-Object {$_.name -eq “osqueryd”}
-      - run:
-      - iwr -useb get.scoop.sh | iex # or shorter #The command "iwr -useb get.scoop.sh | iex" exited with 127.
-      - scoop install vagrant
-      - vagrant version
-      # - run: choco install vagrant #Packages requiring reboot:
-      # - run: vagrant version
+workflows:
+  workflow:
+    jobs:
+      - build:
+          matrix:
+            parameters:
+              version: ["0.1", "0.2", "0.3"]
+              platform: ["macos", "windows", "linux"]
