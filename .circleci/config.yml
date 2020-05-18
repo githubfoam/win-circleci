@@ -9,20 +9,16 @@ orbs:
 
 jobs:
   build:
-    executor:
+    executor: #https://circleci.com/docs/2.0/hello-world-windows/#section=getting-started
       name: win/default
     steps: # multiple shells in the same job
       - checkout
       - run: choco install osquery --params='/InstallService'
       - run: Start-service osqueryd
       - run: Get-Service | Where-Object {$_.name -eq “osqueryd”}
+      - run:
+      - iwr -useb get.scoop.sh | iex # or shorter #The command "iwr -useb get.scoop.sh | iex" exited with 127.
+      - scoop install vagrant
+      - vagrant version
       # - run: choco install vagrant #Packages requiring reboot:
       # - run: vagrant version
-    macos:  # indicate that we are using the macOS executor
-      xcode: 11.3.0 # indicate our selected version of Xcode
-      steps: # a series of commands to run
-          - checkout  # pull down code from your version control system.
-          - run:
-          # run our tests using xcode's cli tool `xcodebuild`
-            name: Run Unit Tests
-            command: xcodebuild test -scheme circleci-demo-macos
