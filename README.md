@@ -11,8 +11,9 @@ There are three shells that you can use to run job steps on Windows:
 
 Software pre-installed in the Windows image
 <https://circleci.com/docs/2.0/hello-world-windows/#example-configuration-file>
-
+~~~~
+~~~~
 https://crontab.guru/
-
 https://osquery.io/
+https://scoop.sh/
 ~~~~
