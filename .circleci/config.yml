@@ -9,22 +9,53 @@ jobs:
   build-choco-osquery:
     executor: 
       name: win/default
-    steps: # multiple shells in the same job
+    steps: 
       - checkout
       - run: choco install osquery --params='/InstallService'
       - run: Start-service osqueryd
       - run: Get-Service | Where-Object {$_.name -eq “osqueryd”}
-      - run: 
-          name: "Start osquery service"
-          shell: powershell.exe # default shell is Powershell
-          command: | 
-            iwr -useb get.scoop.sh | iex # or shorter #The command "iwr -useb get.scoop.sh | iex" exited with 127.
-            scoop install vagrant
-            vagrant version
       # - run: choco install vagrant #Packages requiring reboot:
       # - run: vagrant version
+
+  build-choco-scoop:
+    executor: 
+      name: win/default
+    steps: 
+      - checkout
+      - run:
+          name: "helloworld powershell"            
+          command: $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
+          shell: powershell.exe # default shell is Powershell      
+      # - run: 
+      #     name: "Install scoop"
+      #     shell: powershell.exe # default shell is Powershell
+      #     # iwr : Win32 internal error "Access is denied" 0x5 
+      #     command: | 
+      #       iwr -useb get.scoop.sh | iex # or shorter #The command "iwr -useb get.scoop.sh | iex" exited with 127.
+      #       scoop install vagrant
+      #       vagrant version      
+
+  build-multi-shells:
+    executor: 
+      name: win/default
+    steps: 
+      - checkout
+      - run:
+          name: "helloworld in powershell"            
+          command: $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
+          shell: powershell.exe # default shell is Powershell  
+      - run:
+          name: "helloworld in bash"            
+          command: echo hello && echo world
+          shell: bash.exe
+      - run:
+          name: "helloworld in cmd"            
+          command: echo hello & echo world
+          shell: cmd.exe
 
 workflows:
   commit-parallel-workflow:
     jobs:
       - build-choco-osquery
+      - build-choco-scoop
+      - build-multi-shells
