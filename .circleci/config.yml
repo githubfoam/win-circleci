@@ -10,17 +10,14 @@ jobs:
       name: win/default
     steps: 
       - checkout
-      # - run: choco install osquery --params='/InstallService'
       - run: 
           name: "Install osquery w choco"
           shell: powershell.exe # default shell is Powershell
           command: choco install osquery --params='/InstallService'
-      # - run: Start-service osqueryd
       - run: 
           name: "Start osquery service"
           shell: powershell.exe # default shell is Powershell
           command: Start-service osqueryd        
-      # - run: Get-Service | Where-Object {$_.name -eq “osqueryd”}
       - run: 
           name: "Query osquery service"
           shell: powershell.exe # default shell is Powershell
