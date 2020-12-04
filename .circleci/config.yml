@@ -23,3 +23,8 @@ jobs:
             vagrant version
       # - run: choco install vagrant #Packages requiring reboot:
       # - run: vagrant version
+
+workflows:
+  commit-parallel-workflow:
+    jobs:
+      - build-choco-osquery
