@@ -18,4 +18,6 @@ NuGet CLI 5.2.0.6090
 Chocolatey v0.10.15
 
 <https://circleci.com/docs/2.0/hello-world-windows/#example-configuration-file>
+
+https://crontab.guru/
 ~~~~

@@ -8,7 +8,8 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
-  build:
+
+  build-osquery:
     executor:
       name: win/default
     steps: # multiple shells in the same job
@@ -16,3 +17,19 @@ jobs:
       - run: choco install osquery --params='/InstallService'
       - run: Start-service osqueryd
       - run: Get-Service | Where-Object {$_.name -eq “osqueryd”}
+
+workflows:
+  commit-parallel-workflow:
+    jobs:
+      - build-osquery
+  scheduled-workflow:
+    triggers:
+      - schedule:        
+          cron: "0,15,30,45 * * * *" # at minutes 0, 15, 30, 45
+          # cron: "0 0 1 * *" # once a month
+          filters:
+            branches:
+              only: 
+              - master
+    jobs:
+      - build-osquery
