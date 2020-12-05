@@ -17,7 +17,7 @@ jobs:
       # - run: choco install vagrant #Packages requiring reboot:
       # - run: vagrant version
 
-  build-choco-scoop:
+  build-scoop:
     executor: 
       name: win/default
     steps: 
@@ -26,6 +26,15 @@ jobs:
           name: "helloworld powershell"            
           command: $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
           shell: powershell.exe # default shell is Powershell      
+      - run:
+          name: "change the execution policy (i.e. enable Powershell) "            
+          command: "Set-ExecutionPolicy RemoteSigned -scope CurrentUser"
+          shell: powershell.exe # default shell is Powershell           
+      - run:
+          name: "Install scoop" 
+          command: "Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')"
+          # Make sure PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later) are installed           
+          shell: powershell.exe # default shell is Powershell             
       # - run: 
       #     name: "Install scoop"
       #     shell: powershell.exe # default shell is Powershell
@@ -57,5 +66,5 @@ workflows:
   commit-parallel-workflow:
     jobs:
       - build-choco-osquery
-      - build-choco-scoop
+      - build-scoop
       - build-multi-shells
