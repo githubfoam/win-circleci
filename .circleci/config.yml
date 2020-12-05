@@ -34,7 +34,34 @@ jobs:
           name: "Install scoop" 
           command: "Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')"
           # Make sure PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later) are installed           
-          shell: powershell.exe # default shell is Powershell             
+          shell: powershell.exe # default shell is Powershell
+      - run:
+          name: "scoop help "            
+          command: "scoop help"
+          shell: powershell.exe # default shell is Powershell
+
+  build-scoop-shorter:
+    executor: 
+      name: win/default
+    steps: 
+      - checkout
+      - run:
+          name: "helloworld powershell"            
+          command: $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
+          shell: powershell.exe # default shell is Powershell      
+      - run:
+          name: "change the execution policy (i.e. enable Powershell) "            
+          command: "Set-ExecutionPolicy RemoteSigned -scope CurrentUser"
+          shell: powershell.exe # default shell is Powershell           
+      - run:
+          name: "Install scoop - shorter" 
+          command: "iwr -useb get.scoop.sh | iex"
+          # Make sure PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later) are installed           
+          shell: powershell.exe # default shell is Powershell
+      - run:
+          name: "scoop help "            
+          command: "scoop help"
+          shell: powershell.exe # default shell is Powershell                                    
       # - run: 
       #     name: "Install scoop"
       #     shell: powershell.exe # default shell is Powershell
@@ -67,4 +94,5 @@ workflows:
     jobs:
       - build-choco-osquery
       - build-scoop
+      - build-scoop-shorter
       - build-multi-shells
