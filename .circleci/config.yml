@@ -1,17 +1,43 @@
-# Python CircleCI 2.0 configuration file
-#
-# https://circleci.com/docs/2.0/hello-world-windows/#example-configuration-file
-#
+# https://circleci.com/docs/2.0/configuration-cookbook/#use-matrix-jobs-to-run-multiple-os-tests
 version: 2.1
 
 orbs:
-  win: circleci/windows@2.2.0
+  node: circleci/node@4.0.0
+  win: circleci/windows@2.2.0 
+
+executors:
+  linux: # linux executor using the node base image
+    docker:
+      - image: cimg/node
+        # auth:
+        #   username: mydockerhub-user
+        #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+  windows: win/default # windows executor - uses the default executor from the windows orb
+  # macos: # macos executor using xcode 11.6
+  #   macos:
+  #     xcode: 11.6  
+
+jobs:
+  test:
+    parameters:
+      os:
+        type: executor
+      node-version:
+        type: string
+    executor: << parameters.os >>
+    steps:
+      - checkout
+      - node/install:
+          node-version: << parameters.node-version >>
+          install-yarn: true
+      - run: yarn test
 
 workflows:
-  workflow:
+  all-tests:
     jobs:
-      - build:
+      - test:
           matrix:
             parameters:
-              version: ["0.1", "0.2", "0.3"]
-              platform: ["macos", "windows", "linux"]
+              # os: [linux, windows, macos]
+              os: [linux, windows]
+              node-version: ["13.13.0", "14.0.0"]
