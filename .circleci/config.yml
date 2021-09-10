@@ -1,6 +1,7 @@
 
 version: 2
 jobs:
+
   build:
     working_directory: /app
     docker:
@@ -31,3 +32,25 @@ jobs:
       - run:
           name: Remove environment
           command: conda remove --name anaconda-docker --all --yes
+
+  build-vagrant-libvirt:
+    docker:
+      - image: circleci/python:3.6.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+
+    jobs:
+        - build
+        - build-vagrant-libvirt
