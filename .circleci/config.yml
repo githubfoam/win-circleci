@@ -34,9 +34,29 @@ jobs:
   #         command: conda remove --name anaconda-docker --all --yes
 
 
-  build:
-    docker:
-      - image: circleci/python:3.6.1
+  # build:
+  #   docker:
+  #     - image: circleci/python:3.6.1
+  #   working_directory: ~/repo
+  #   steps:
+  #     - checkout
+  #     # Download and cache dependencies
+  #     - restore_cache:
+  #         keys:
+  #         - v1-dependencies-{{ checksum "requirements.txt" }}
+  #         # fallback to using the latest cache if no exact match is found
+  #         - v1-dependencies-
+  #     - run:
+  #         name: "create python virtual env v1"
+  #         command: |
+  #           python3 -m venv venv
+  #           . venv/bin/activate
+  #           pip install -r requirements.txt
+  #           pip install --upgrade pip
+
+  build: # name of your job
+    machine: # executor type
+      image: ubuntu-2004:202010-01 # # recommended linux image - includes Ubuntu 20.04, docker 19.03.13, docker-compose 1.27.4
     working_directory: ~/repo
     steps:
       - checkout
