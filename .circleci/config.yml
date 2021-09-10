@@ -95,6 +95,12 @@ jobs:
       #       sudo make deploy-libvirt
       #       # sudo make deploy-vagrant
       #       # sudo make deploy-boxes               
+      - run:
+          name: "build vagrant kvm libvirt"
+          command: |
+            sudo make deploy-libvirt
+            # sudo make deploy-vagrant
+            # sudo make deploy-boxes  
 
 # workflows:
 #   commit-parallel-workflow:
