@@ -51,6 +51,12 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
 
+workflows:
+  commit-parallel-workflow:
     jobs:
-        - build
-        - build-vagrant-libvirt
+      - build
+      - build-vagrant-libvirt
+
+    # jobs:
+    #     - build
+    #     - build-vagrant-libvirt
