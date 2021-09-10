@@ -34,7 +34,7 @@ jobs:
   #         command: conda remove --name anaconda-docker --all --yes
 
 
-  build-vagrant-libvirt:
+  build:
     docker:
       - image: circleci/python:3.6.1
     working_directory: ~/repo
