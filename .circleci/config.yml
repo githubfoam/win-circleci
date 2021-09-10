@@ -60,7 +60,7 @@ jobs:
             sudo virtualenv -p $(which python3) ~venvpy3
             source ~venvpy3/bin/activate
             sudo pip install -r requirements.txt   
-            pip install --upgrade pip
+            sudo pip install --upgrade pip
       - run:
           name: "build vagrant kvm libvirt"
           command: |
