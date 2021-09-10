@@ -55,8 +55,8 @@ jobs:
       - run:
           name: "create python virtual env v2"
           command: |
-            pip3 install virtualenv
-            # virtualenv -p $(which python3) ~venvpy3
+            sudo pip3 install virtualenv
+            sudo virtualenv -p $(which python3) ~venvpy3
             # source ~venvpy3/bin/activate
             # pip install -r requirements.txt      
 
