@@ -67,10 +67,11 @@ jobs:
             sudo pip3 install virtualenv
             sudo virtualenv -p $(which python3) ~venvpy3
             source ~venvpy3/bin/activate
-            pip install -r requirements.txt
+            sudo pip install -r requirements.txt
+            sudo pip install --upgrade pip
             sudo make deploy-libvirt
-            sudo make deploy-vagrant
-            sudo make deploy-boxes               
+            # sudo make deploy-vagrant
+            # sudo make deploy-boxes               
 
 # workflows:
 #   commit-parallel-workflow:
