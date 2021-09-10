@@ -1,37 +1,38 @@
 
-# version: 2
+version: 2
 jobs:
 
-  build:
-    working_directory: /app
-    docker:
-      - image: continuumio/miniconda3
-    steps:
-      - checkout
-      # - restore_cache:
-      #     key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
-      - run:
-          name: Install dependencies
-          command: conda env create -f environment.yml
-      # - run:
-      #     name: "Update conda"
-      #     command: conda env update -f environment.yml
-      # - run:
-      #     command: |
-      #       conda env list | grep anaconda-docker >/dev/null
-      #       if [[ $? != 0 ]]; then
-      #           conda env create -f environment.yml
-      #       fi
-      # - save_cache:
-      #     key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
-      #     paths:
-      #       - "/opt/conda"
-      - run:
-          name: Run unit tests
-          command: conda run -n anaconda-docker python -m unittest discover -v
-      - run:
-          name: Remove environment
-          command: conda remove --name anaconda-docker --all --yes
+  # build:
+  #   working_directory: /app
+  #   docker:
+  #     - image: continuumio/miniconda3
+  #   steps:
+  #     - checkout
+  #     # - restore_cache:
+  #     #     key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
+  #     - run:
+  #         name: Install dependencies
+  #         command: conda env create -f environment.yml
+  #     # - run:
+  #     #     name: "Update conda"
+  #     #     command: conda env update -f environment.yml
+  #     # - run:
+  #     #     command: |
+  #     #       conda env list | grep anaconda-docker >/dev/null
+  #     #       if [[ $? != 0 ]]; then
+  #     #           conda env create -f environment.yml
+  #     #       fi
+  #     # - save_cache:
+  #     #     key: deps9-{{ .Branch }}-{{ checksum "environment.yml" }}
+  #     #     paths:
+  #     #       - "/opt/conda"
+  #     - run:
+  #         name: Run unit tests
+  #         command: conda run -n anaconda-docker python -m unittest discover -v
+  #     - run:
+  #         name: Remove environment
+  #         command: conda remove --name anaconda-docker --all --yes
+
 
   build-vagrant-libvirt:
     docker:
@@ -51,11 +52,11 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
 
-workflows:
-  commit-parallel-workflow:
-    jobs:
-      - build
-      - build-vagrant-libvirt
+# workflows:
+#   commit-parallel-workflow:
+#     jobs:
+#       - build
+#       - build-vagrant-libvirt
 
     # jobs:
     #     - build
