@@ -9,8 +9,10 @@ echo "=============================Install kvm qemu libvirt=====================
 apt-get -qq update
 apt-get install -y cpu-checker bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev
 
-systemctl status libvirtd
-export TERM=msys
+# systemctl status libvirtd
+#check if a service is active
+systemctl is-active sshd >/dev/null 2>&1 && echo YES || echo NO 
+
 libvirtd --version
 
 egrep -c '(vmx|svm)' /proc/cpuinfo #If 0 it means that your CPU doesn't support hardware virtualization.If 1 or more it does - but you still need to make sure that virtualization is enabled in the BIOS.
