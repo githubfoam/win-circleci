@@ -17,7 +17,6 @@ export strservice="libvirtd"
 if (systemctl -q is-active $strservice)
     then
     echo "${strservice} is still running."
-    exit 1
 fi
 
 
