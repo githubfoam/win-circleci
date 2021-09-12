@@ -11,11 +11,23 @@ apt-get install -y cpu-checker bridge-utils dnsmasq-base ebtables libvirt-bin li
 
 # systemctl status libvirtd
 #check if a service is active
-systemctl is-active sshd >/dev/null 2>&1 && echo YES || echo NO 
+systemctl is-active libvirtd >/dev/null 2>&1 && echo YES || echo NO 
+
+export strservice="libvirtd"
+if (systemctl -q is-active $strservice)
+    then
+    echo "${strservice} is still running."
+    exit 1
+fi
+
 
 libvirtd --version
 
-egrep -c '(vmx|svm)' /proc/cpuinfo #If 0 it means that your CPU doesn't support hardware virtualization.If 1 or more it does - but you still need to make sure that virtualization is enabled in the BIOS.
+#If 0 it means that your CPU doesn't support hardware virtualization.
+# If 1 or more it does - but you still need to make sure that virtualization is enabled in the BIOS.
+egrep -c '(vmx|svm)' /proc/cpuinfo 
+
+
 addgroup libvirtd
 adduser  $(id -un) libvirtd #ensure that your username is added to the group libvirtd
 
