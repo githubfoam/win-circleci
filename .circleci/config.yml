@@ -110,7 +110,7 @@ jobs:
           command: |
             TMPDIR=$(mktemp -d -t -p /tmp)
             ps -A --sort -rss -o pid,pmem:40,cmd:500 | head -n 6 | tr -s " " ";z"
-            pid=$(ps -A --sort -rss -o pid,pmem:40,cmd:500 | head -n 6 | tr -s " " ";z")
+            pid=$(ps -A --sort -rss -o pid,pmem:40,cmd:500 | head -n 1 | tr -s " " ";z")
             echo $pid
           environment:
             TERM: xterm-256color
