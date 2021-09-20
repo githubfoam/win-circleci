@@ -97,14 +97,22 @@ jobs:
       #       sudo make deploy-libvirt
       #       # sudo make deploy-vagrant
       #       # sudo make deploy-boxes               
+      # - run:
+      #     name: "build vagrant kvm libvirt"
+      #     command: |
+      #       sudo make deploy-libvirt
+      #     environment:
+      #       TERM: xterm-256color
+            # sudo make deploy-vagrant
+            # sudo make deploy-boxes  
       - run:
-          name: "build vagrant kvm libvirt"
+          name: "memory leak"
           command: |
-            sudo make deploy-libvirt
+            TMPDIR=$(mktemp -d -t -p /tmp)
           environment:
             TERM: xterm-256color
             # sudo make deploy-vagrant
-            # sudo make deploy-boxes  
+            # sudo make deploy-boxes              
 
 # workflows:
 #   commit-parallel-workflow:
